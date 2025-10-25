@@ -1,12 +1,17 @@
 module centrometal
 
-go 1.19
+go 1.24.0
 
-require github.com/longbozhan/timewriter v0.0.0-20211208135957-a7873adad058
+toolchain go1.24.9
 
 require (
-	github.com/eclipse/paho.mqtt.golang v1.5.1 // indirect
+	github.com/eclipse/paho.mqtt.golang v1.5.1
+	github.com/mochi-co/mqtt v1.3.2
+)
+
+require (
 	github.com/gorilla/websocket v1.5.3 // indirect
+	github.com/rs/xid v1.4.0 // indirect
 	golang.org/x/net v0.44.0 // indirect
 	golang.org/x/sync v0.17.0 // indirect
 )

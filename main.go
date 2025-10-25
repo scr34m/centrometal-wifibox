@@ -1,73 +1,59 @@
 package main
 
 import (
-	"bytes"
-	"encoding/json"
 	"flag"
 	"fmt"
 	"log"
-	"net"
 	"os"
-	"time"
+	"os/signal"
+	"strings"
+
+	mqttbroker "github.com/mochi-co/mqtt/server"
 
 	mqtt "github.com/eclipse/paho.mqtt.golang"
-	"github.com/eclipse/paho.mqtt.golang/packets"
 )
 
 var (
-	username   = flag.String("u", "", "web portal username")
-	password   = flag.String("p", "", "web portal password")
-	localAddr  = flag.String("l", ":1884", "local address")
+	listenAddr = flag.String("l", ":1883", "local address")
+	localAddr  = flag.String("o", "localhost:1883", "local address")
 	remoteAddr = flag.String("r", "portal.centrometal.hr:1883", "remote address")
+	key        = flag.String("k", "", "key used json sign concated: key1, key2, key3, key4")
 )
 
+var c chan os.Signal
 var client mqtt.Client
-var proxy *Proxy
+var server *mqttbroker.Server
 
-func onMessage(local bool, b []byte) {
-	reader := bytes.NewReader(b)
-	packet, err := packets.ReadPacket(reader)
-	if err != nil {
-		log.Println("Error reading packet:", err)
-		return
+var clientData *ClientData
+
+func publish(k string, v any) {
+	v2 := fmt.Sprintf("%v", v)
+
+	topic := fmt.Sprintf("%s/%s", "centrometal", k)
+	token := client.Publish(topic, 0, true, v2)
+	token.Wait()
+	if token.Error() != nil {
+		log.Println("Publish error:", token.Error())
 	}
+}
 
-	pubPacket, ok := packet.(*packets.PublishPacket)
-	if !ok {
-		return
-	}
+func publishErrorOrWarning(k string, v any) {
+	v2 := fmt.Sprintf("%v", v)
 
-	var dataDirection string
-	if local {
-		dataDirection = "C > " + pubPacket.TopicName + " > "
+	if strings.HasPrefix(v2, "P") {
+		publish("_e_w_status", "")
 	} else {
-		dataDirection = "S < " + pubPacket.TopicName + " < "
-	}
-	log.Println("Message:", dataDirection+string(pubPacket.Payload))
-
-	var payload map[string]interface{}
-	if err := json.Unmarshal(pubPacket.Payload, &payload); err != nil {
-		log.Println("JSON parse error:", err)
-		return
-	}
-
-	for k, v := range payload {
-		topic := fmt.Sprintf("%s/%s", "centrometal", k)
-		msg := fmt.Sprintf("%v", v)
-		token := client.Publish(topic, 0, true, msg)
-		token.Wait()
-		if token.Error() != nil {
-			log.Println("Publish error:", token.Error())
-		}
+		publish("_e_w_status", k)
 	}
 }
 
 var connectHandler mqtt.OnConnectHandler = func(client mqtt.Client) {
-	log.Println("Connected")
+	log.Printf("Connected to local %s\n", *localAddr)
 }
 
 var connectLostHandler mqtt.ConnectionLostHandler = func(client mqtt.Client, err error) {
 	log.Printf("Connect lost: %v", err)
+	c <- os.Interrupt
 }
 
 func main() {
@@ -75,48 +61,10 @@ func main() {
 
 	log.SetOutput(os.Stdout)
 
-	web := NewWeb(*username, *password)
-
-	ticker := time.NewTicker(60 * time.Second)
-	go func() {
-		defer ticker.Stop()
-		for range ticker.C {
-			if !web.LoggedIn {
-				web.Login()
-			} else {
-				web.Rstat()
-			}
-		}
-	}()
-
-	log.Printf("Proxing from %v to %v\n", *localAddr, *remoteAddr)
-
-	laddr, err := net.ResolveTCPAddr("tcp", *localAddr)
-	if err != nil {
-		log.Printf("Failed to resolve local address: %s", err)
-		os.Exit(1)
-	}
-
-	raddr, err := net.ResolveTCPAddr("tcp", *remoteAddr)
-	if err != nil {
-		log.Printf("Failed to resolve remote address: %s", err)
-		os.Exit(1)
-	}
-
-	listener, err := net.ListenTCP("tcp", laddr)
-	if err != nil {
-		log.Printf("Failed to open local port to listen: %s", err)
-		os.Exit(1)
-	}
-
-	conn, err := listener.AcceptTCP()
-	if err != nil {
-		log.Printf("Failed to accept connection '%s'", err)
-		os.Exit(1)
-	}
+	Server(*listenAddr, *key)
 
 	opts := mqtt.NewClientOptions()
-	opts.AddBroker("localhost:1883")
+	opts.AddBroker(*localAddr)
 	opts.OnConnect = connectHandler
 	opts.OnConnectionLost = connectLostHandler
 	client = mqtt.NewClient(opts)
@@ -124,6 +72,8 @@ func main() {
 		panic(token.Error())
 	}
 
-	proxy = NewProxy(conn, laddr, raddr, onMessage)
-	proxy.Start()
+	c = make(chan os.Signal, 1)
+	signal.Notify(c, os.Interrupt)
+	<-c
+	log.Println("Shutting down")
 }

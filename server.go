@@ -38,6 +38,8 @@ func Server(addr string, key string) {
 		}
 	}()
 
+	Rstat_Down()
+
 	server.Events.OnConnect = func(cl events.Client, pk events.Packet) {
 		log.Printf("OnConnect %s\n", cl.ID)
 		clientData = &ClientData{
@@ -47,7 +49,6 @@ func Server(addr string, key string) {
 			SrvMsgId:    1,
 			JsonSignKey: jsonSignInit(key[0:10], key[10:20], key[20:30], key[30:40], string(pk.Password)),
 		}
-		Rstat_Down()
 	}
 
 	server.Events.OnSubscribe = func(filter string, cl events.Client, qos byte) {
@@ -110,6 +111,10 @@ func Rstat_Down() {
 	go func() {
 		defer ticker.Stop()
 		for range ticker.C {
+			if clientData == nil {
+				continue
+			}
+
 			clientData.SrvMsgId++
 			msg := []JsonOrderedKV{
 				{"RSTAT", "ALL"},

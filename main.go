@@ -37,16 +37,18 @@ func publish(k string, v any) {
 	}
 }
 
-func b_state(client mqtt.Client, msg mqtt.Message) {
-	if string(msg.Payload()) == "ON" {
+func command(client mqtt.Client, msg mqtt.Message) {
+	v := string(msg.Payload())
+	log.Printf("Command call: %s\n", v)
+	if v == "CMD ON" {
 		Cmd_Down(1)
-	} else {
+	} else if string(msg.Payload()) == "CMD OFF" {
 		Cmd_Down(0)
+	} else if string(msg.Payload()) == "REFRESH" {
+		Refresh_Down(0)
+	} else if string(msg.Payload()) == "RSTAT" {
+		Refresh_Down("ALL")
 	}
-}
-
-func refresh(client mqtt.Client, msg mqtt.Message) {
-	Refresh_Down(0)
 }
 
 func publishErrorOrWarning(k string, v any) {
@@ -84,10 +86,7 @@ func main() {
 		panic(token.Error())
 	}
 
-	token := client.Subscribe("centrometal/B_STATE/cmd", 0, b_state)
-	token.Wait()
-
-	token = client.Subscribe("centrometal/REFRESH/cmd", 0, refresh)
+	token := client.Subscribe("centrometal/command", 0, command)
 	token.Wait()
 
 	c = make(chan os.Signal, 1)

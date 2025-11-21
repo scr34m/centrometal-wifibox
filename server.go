@@ -38,7 +38,7 @@ func Server(addr string, key string) {
 		}
 	}()
 
-	Rstat_Down()
+	Rstat_Down_ticker()
 
 	server.Events.OnConnect = func(cl events.Client, pk events.Packet) {
 		log.Printf("OnConnect %s\n", cl.ID)
@@ -106,21 +106,12 @@ func Server(addr string, key string) {
 	}
 }
 
-func Rstat_Down() {
+func Rstat_Down_ticker() {
 	ticker := time.NewTicker(60 * time.Second)
 	go func() {
 		defer ticker.Stop()
 		for range ticker.C {
-			if clientData == nil {
-				continue
-			}
-
-			clientData.SrvMsgId++
-			msg := []JsonOrderedKV{
-				{"RSTAT", "ALL"},
-				{"srvMsgId", clientData.SrvMsgId},
-			}
-			Message_Down(msg)
+			Rstat_Down("ALL")
 		}
 	}()
 }
@@ -153,6 +144,19 @@ func Ack_Down(key string, value any) {
 	Message_Down(msg)
 }
 
+func Rstat_Down(value any) {
+	if clientData == nil {
+		return
+	}
+
+	clientData.SrvMsgId++
+	msg := []JsonOrderedKV{
+		{"RSTAT", value},
+		{"srvMsgId", clientData.SrvMsgId},
+	}
+	Message_Down(msg)
+}
+
 func Cmd_Down(value any) {
 	if clientData == nil {
 		return
@@ -181,7 +185,7 @@ func Refresh_Down(value any) {
 
 func Message_Down(msg []JsonOrderedKV) {
 	go func() {
-		response := jsonSign(clientData.JsonSignKey, msg)
-		server.Publish(clientData.Topic, []byte(response), false)
+		request := jsonSign(clientData.JsonSignKey, msg)
+		server.Publish(clientData.Topic, []byte(request), false)
 	}()
 }

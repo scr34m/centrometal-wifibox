@@ -126,6 +126,10 @@ func Rstat_Down() {
 }
 
 func SyncAck_Down() {
+	if clientData == nil {
+		return
+	}
+
 	clientData.SrvMsgId++
 	msg := []JsonOrderedKV{
 		{"_sync_ACK", "ok"},
@@ -137,10 +141,40 @@ func SyncAck_Down() {
 }
 
 func Ack_Down(key string, value any) {
+	if clientData == nil {
+		return
+	}
+
 	clientData.SrvMsgId++
 	msg := []JsonOrderedKV{
 		{key + "_ACK", value},
 		{"srvMsgId", fmt.Sprintf("%v", clientData.SrvMsgId)},
+	}
+	Message_Down(msg)
+}
+
+func Cmd_Down(value any) {
+	if clientData == nil {
+		return
+	}
+
+	clientData.SrvMsgId++
+	msg := []JsonOrderedKV{
+		{"CMD", value},
+		{"srvMsgId", clientData.SrvMsgId},
+	}
+	Message_Down(msg)
+}
+
+func Refresh_Down(value any) {
+	if clientData == nil {
+		return
+	}
+
+	clientData.SrvMsgId++
+	msg := []JsonOrderedKV{
+		{"REFRESH", value},
+		{"srvMsgId", clientData.SrvMsgId},
 	}
 	Message_Down(msg)
 }

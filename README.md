@@ -2,7 +2,7 @@ Centrometal WifiBox Command Server
 ---
 
 The goal of this project is to read all data that would normally be exported to the original server and store it localy.
-This program is handling my Pellet Set 35KW and so Home Assistant can use walues with out internet connection.
+This program is handling my Pellet Set 25KW and so Home Assistant can use walues with out internet connection.
 
 The WifiBox connects to this server (which acts as an MQTT broker), and the parsed information is then sent back to the local MQTT server.
 

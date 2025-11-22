@@ -17,7 +17,7 @@ var (
 	listenAddr = flag.String("l", ":1883", "local address")
 	localAddr  = flag.String("o", "localhost:1883", "local address")
 	remoteAddr = flag.String("r", "portal.centrometal.hr:1883", "remote address")
-	key        = flag.String("k", "", "key used json sign concated: key1, key2, key3, key4")
+	key        = flag.String("k", "158208e84665e0158208e84665e065e0158208e8", "key used json sign concated: key1, key2, key3, key4")
 )
 
 var c chan os.Signal

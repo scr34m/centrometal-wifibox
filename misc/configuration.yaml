@@ -1,0 +1,383 @@
+mqtt:
+  sensor:
+    - name: "Boiler Temperature"
+      state_topic: "centrometal/B_Tk1"
+      unique_id: "cm_pelet_set_boiler_temperature"
+      icon: "mdi:thermometer"
+      unit_of_measurement: "°C"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "Wifi Signal"
+      state_topic: "centrometal/B_signal"
+      unique_id: "cm_pelet_set_wifi_signal"
+      icon: "mdi:information"
+      unit_of_measurement: "dB"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "Fire Sensor"
+      state_topic: "centrometal/B_FotV"
+      unique_id: "cm_pelet_set_fire_sensor"
+      icon: "mdi:fire"
+      unit_of_measurement: "kOhm"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "Heater Fan State"
+      state_topic: "centrometal/B_fan"
+      unique_id: "cm_pelet_set_heater_fan_state"
+      icon: "mdi:fan"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "Operation Mode"
+      state_topic: "centrometal/B_zlj"
+      unique_id: "cm_pelet_set_operation_mode"
+      icon: "mdi:book-open"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "C1 Correction Type"
+      state_topic: "centrometal/C1B_korType"
+      unique_id: "cm_pelet_set_circuit_1_correction_type"
+      icon: "mdi:view-list"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "C1 Day Night Mode"
+      state_topic: "centrometal/C1B_dayNight"
+      unique_id: "cm_pelet_set_circuit_1_day_night_mode"
+      icon: "mdi:view-list"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "C1 Valve Opening"
+      state_topic: "centrometal/C1B_misO"
+      unique_id: "cm_pelet_set_circuit_1_valve_opening"
+      icon: "mdi:pipe-valve"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "C1 Pump"
+      state_topic: "centrometal/C1B_P"
+      unique_id: "cm_pelet_set_circuit_1_pump"
+      icon: "mdi:pump"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "C1 Heating Type"
+      state_topic: "centrometal/C1B_CircType"
+      unique_id: "cm_pelet_set_circuit_1_heating_type"
+      icon: "mdi:view-list"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "C1 Valve Closing"
+      state_topic: "centrometal/C1B_misC"
+      unique_id: "cm_pelet_set_circuit_1_valve_closing"
+      icon: "mdi:pipe-valve"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "C1 Pump Demand"
+      state_topic: "centrometal/C1B_onOff"
+      unique_id: "cm_pelet_set_circuit_1_pump_demand"
+      icon: "mdi:pump"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "Boiler Operational"
+      state_topic: "centrometal/B_uklKot"
+      unique_id: "cm_pelet_set_boiler_operational"
+      icon: "mdi:information"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "Freeze Monitor"
+      state_topic: "centrometal/B_freezMon"
+      unique_id: "cm_pelet_set_freeze_monitor"
+      icon: "mdi:snowflake"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "Remote Start Enabled"
+      state_topic: "centrometal/B_netMon"
+      unique_id: "cm_pelet_set_remote_start_enabled"
+      icon: "mdi:remote"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "Freeze Guard"
+      state_topic: "centrometal/B_freezEn"
+      unique_id: "cm_pelet_set_freeze_guard"
+      icon: "mdi:snowflake"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "Additional features"
+      state_topic: "centrometal/B_Add"
+      unique_id: "cm_pelet_set_additional_features"
+      icon: "mdi:note-plus"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "Pellet Tank Level"
+      state_topic: "centrometal/B_cmsr100"
+      unique_id: "cm_pelet_set_pellet_tank_level"
+      icon: "mdi:information"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "CentroPlus"
+      state_topic: "centrometal/B_CP"
+      unique_id: "cm_pelet_set_centroplus"
+      icon: "mdi:information"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "Boiler pump"
+      state_topic: "centrometal/CNT_8"
+      unique_id: "cm_pelet_set_boiler_pump_2"
+      icon: "mdi:timer"
+      unit_of_measurement: "min"
+      state_class: total_increasing
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "Working DHW only"
+      state_topic: "centrometal/CNT_1"
+      unique_id: "cm_pelet_set_working_dhw_only"
+      icon: "mdi:timer"
+      unit_of_measurement: "min"
+      state_class: total_increasing
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "Freeze protection"
+      state_topic: "centrometal/CNT_2"
+      unique_id: "cm_pelet_set_freeze_protection"
+      icon: "mdi:timer"
+      unit_of_measurement: "min"
+      state_class: total_increasing
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "Number of Burner Start"
+      state_topic: "centrometal/CNT_3"
+      unique_id: "cm_pelet_set_number_of_burner_start"
+      icon: "mdi:counter"
+      state_class: total_increasing
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "Fan Working Time"
+      state_topic: "centrometal/CNT_4"
+      unique_id: "cm_pelet_set_fan_working_time"
+      icon: "mdi:timer"
+      unit_of_measurement: "min"
+      state_class: total_increasing
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "Burner Work"
+      state_topic: "centrometal/CNT_0"
+      unique_id: "cm_pelet_set_burner_work"
+      icon: "mdi:timer"
+      unit_of_measurement: "min"
+      state_class: total_increasing
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "Electric Heater Working Time"
+      state_topic: "centrometal/CNT_5"
+      unique_id: "cm_pelet_set_electric_heater_working_time"
+      icon: "mdi:timer"
+      unit_of_measurement: "min"
+      state_class: total_increasing
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "Number of Electric Heater Start"
+      state_topic: "centrometal/CNT_6"
+      unique_id: "cm_pelet_set_number_of_electric_heater_start"
+      icon: "mdi:counter"
+      state_class: total_increasing
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "Vacuum Turbine Working Time"
+      state_topic: "centrometal/CNT_7"
+      unique_id: "cm_pelet_set_vacuum_turbine_working_time"
+      icon: "mdi:timer"
+      unit_of_measurement: "min"
+      state_class: total_increasing
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "Boiler State"
+      state_topic: "centrometal/B_STATE"
+      unique_id: "cm_pelet_set_boiler_state"
+      icon: "mdi:state-machine"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "Configuration"
+      state_topic: "centrometal/B_KONF"
+      unique_id: "cm_pelet_set_configuration"
+      icon: "mdi:information"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "Setup"
+      state_topic: "centrometal/B_KONF_STR"
+      unique_id: "cm_pelet_set_setup"
+      icon: "mdi:information"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "Command Active"
+      state_topic: "centrometal/B_CMD"
+      unique_id: "cm_pelet_set_command_active"
+      icon: "mdi:state-machine"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "Heater State"
+      state_topic: "centrometal/B_gri"
+      unique_id: "cm_pelet_set_heater_state"
+      icon: "mdi:fire"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "C1 Room Target Correction"
+      state_topic: "centrometal/C1B_kor"
+      unique_id: "cm_pelet_set_circuit_1_room_target_correction"
+      icon: "mdi:thermometer"
+      unit_of_measurement: "°C"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "C1 Flow Target Temperature"
+      state_topic: "centrometal/C1B_Tpol"
+      unique_id: "cm_pelet_set_circuit_1_flow_target_temperature"
+      icon: "mdi:thermometer"
+      unit_of_measurement: "°C"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "C1 Room Measured Temperature"
+      state_topic: "centrometal/C1B_Tsob1"
+      unique_id: "cm_pelet_set_circuit_1_room_measured_temperature"
+      icon: "mdi:thermometer"
+      unit_of_measurement: "°C"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "C1 Flow Measured Temperature"
+      state_topic: "centrometal/C1B_Tpol1"
+      unique_id: "cm_pelet_set_circuit_1_flow_measured_temperature"
+      icon: "mdi:thermometer"
+      unit_of_measurement: "°C"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "C1 Room Target Temperature"
+      state_topic: "centrometal/C1B_Tsob"
+      unique_id: "cm_pelet_set_circuit_1_room_target_temperature"
+      icon: "mdi:thermometer"
+      unit_of_measurement: "°C"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "Installation"
+      state_topic: "centrometal/B_INST"
+      unique_id: "cm_pelet_set_installation"
+      icon: "mdi:information"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "Brand"
+      state_topic: "centrometal/B_BRAND"
+      unique_id: "cm_pelet_set_brand"
+      icon: "mdi:information"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "Product Name"
+      state_topic: "centrometal/B_PRODNAME"
+      unique_id: "cm_pelet_set_product_name"
+      icon: "mdi:information"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "Wifi Box Version"
+      state_topic: "centrometal/B_WifiVER"
+      unique_id: "cm_pelet_set_wifi_box_version"
+      icon: "mdi:information"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "Firmware Version"
+      state_topic: "centrometal/B_VER"
+      unique_id: "cm_pelet_set_firmware_version"
+      icon: "mdi:information"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "Nominal Power"
+      state_topic: "centrometal/B_sng"
+      unique_id: "cm_pelet_set_nominal_power"
+      icon: "mdi:information"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "Boiler temperature"
+      state_topic: "centrometal/PWR 424"
+      unique_id: "cm_pelet_set_boiler_temperature_2"
+      icon: "mdi:thermometer"
+      unit_of_measurement: "°C"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "Boiler Flow Measured Temperature"
+      state_topic: "centrometal/B_Tpov1"
+      unique_id: "cm_pelet_set_boiler_flow_measured_temperature"
+      icon: "mdi:thermometer"
+      unit_of_measurement: "°C"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "Error/Warning status"
+      state_topic: "centrometal/_e_w_status"
+      unique_id: "cm_pelet_set__e_w_status"
+      icon: "mdi:information"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+    - name: "Pellet Transporter"
+      state_topic: "centrometal/B_puz"
+      unique_id: "cm_pelet_set_pellet_transporter"
+      icon: "mdi:transfer-up"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+  switch:
+    - name: "Switch"
+      unique_id: "cm_plet_set_switch"
+      state_topic: "centrometal/B_STATE"
+      command_topic: "centrometal/command"
+      device:
+        identifiers: ["cm_pellet_set"]
+        name: "Cm Pellet Set"
+      value_template: >-
+        {% if value == "OFF" %}
+          CMD OFF
+        {% else %}
+          CMD ON
+        {% endif %}
+      payload_on: "CMD ON"
+      payload_off: "CMD OFF"
+      qos: 0
+      retain: false
+

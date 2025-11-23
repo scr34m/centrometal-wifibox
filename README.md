@@ -9,8 +9,8 @@ The WifiBox connects to this server (which acts as an MQTT broker), and the pars
 You can either forward the port on your router or change the DNS resolution of portal.centrometal.hr to the local server’s IP address.
 
 Missing functions:
-- parameter handling: PWR, PRD, PVAL
-- programming table
+- parameter handling: PWR, PRD
+- programming table: 327 table 1, 328 table 2, 329 table 3
 
 Two topic is unique:
 - `centrometal/command` which is accepts `CMD ON`, `CMD OFF`, `REFRESH` and `RSTAT`

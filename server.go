@@ -183,6 +183,19 @@ func Refresh_Down(value any) {
 	Message_Down(msg)
 }
 
+func Parameter_Down(param string, value string) {
+	if clientData == nil {
+		return
+	}
+
+	clientData.SrvMsgId++
+	msg := []JsonOrderedKV{
+		{param, value},
+		{"srvMsgId", clientData.SrvMsgId},
+	}
+	Message_Down(msg)
+}
+
 func Message_Down(msg []JsonOrderedKV) {
 	go func() {
 		request := jsonSign(clientData.JsonSignKey, msg)

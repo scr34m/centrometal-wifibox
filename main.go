@@ -42,12 +42,17 @@ func command(client mqtt.Client, msg mqtt.Message) {
 	log.Printf("Command call: %s\n", v)
 	if v == "CMD ON" {
 		Cmd_Down(1)
-	} else if string(msg.Payload()) == "CMD OFF" {
+	} else if v == "CMD OFF" {
 		Cmd_Down(0)
-	} else if string(msg.Payload()) == "REFRESH" {
+	} else if v == "REFRESH" {
 		Refresh_Down(0)
-	} else if string(msg.Payload()) == "RSTAT" {
-		Refresh_Down("ALL")
+	} else if v == "RSTAT" {
+		Rstat_Down("ALL")
+	} else if strings.HasPrefix(v, "PRD") || strings.HasPrefix(v, "PWR") {
+		if strings.Contains(v, ":") {
+			parts := strings.SplitN(v, ":", 2)
+			Parameter_Down(parts[0], parts[1])
+		}
 	}
 }
 

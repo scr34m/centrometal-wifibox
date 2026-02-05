@@ -89,6 +89,7 @@ func Server(addr string, key string) {
 
 		if v, ok := m["PING"]; ok {
 			Ack_Down("PING", v)
+			publish("PING", v)
 			return pk, nil
 		}
 
